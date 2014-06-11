@@ -25,9 +25,11 @@ private:
 	Descente				_typeDescente;
 	float					_save;
 	bool					_attente;
+	int						_score;
 
 public:
 	Grille();
+	~Grille();
 	void copyTetramino();
 	bool enCollision();
 	bool collisionDroite();
@@ -41,4 +43,5 @@ public:
 	void descenteNormal();
 	void descenteInstantanee();
 	void render(sf::RenderTarget &renderer);
+	int getScore();
 };

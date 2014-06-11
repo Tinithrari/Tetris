@@ -7,12 +7,14 @@ class Scene{
 
 private:
 	//Logique
-	Grille				_grille;
+	Grille*				_grille;
 	sf::View			_view;
 	sf::RenderWindow	&window;
+	bool				_jeuLance;
 
 public:
 	Scene(sf::RenderWindow &w);
+	void lancerJeu();
 	void handleEvent();
 	void update();
 	void draw();

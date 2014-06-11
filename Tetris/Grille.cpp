@@ -19,7 +19,13 @@ _suivant(_tetraminoSuivant)
 	_clock.restart();
 	_save = 0;
 	_etat = NONE;
+	_score = 0;
 	_attente = false;
+}
+
+Grille::~Grille()
+{
+
 }
 
 void Grille::copyTetramino()
@@ -149,6 +155,9 @@ void Grille::handleEvent()
 			_typeDescente = INST;
 			_etat = ACTIVATE;
 		}
+		/*
+			Ajout de la pause ici (utiliser un else if)
+		*/
 		else
 		{
 			_etat = NONE;
@@ -208,6 +217,10 @@ void Grille::update()
 	_typeDescente = NORMAL;
 };
 
+int Grille::getScore(){
+	return _score;
+}
+
 void Grille::eraseLine()
 {
 	int i;
@@ -236,6 +249,7 @@ void Grille::eraseLine()
 					for (int x = 0; x < grille.size(); x++)
 						grille[x][y] = grille[x][y - 1];
 			}
+			_score += 100;
 		}
 		j++;
 	}
