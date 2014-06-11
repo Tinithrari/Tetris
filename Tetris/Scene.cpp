@@ -5,7 +5,7 @@ window(w),
 _view(w.getDefaultView())
 {
 	_jeuLance = false;
-	//Construire le menu ici
+	//Construire le menu iciv--et-r-tezf-
 }
 
 void Scene::lancerJeu()

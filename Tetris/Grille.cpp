@@ -30,10 +30,6 @@ Grille::~Grille()
 
 void Grille::copyTetramino()
 {
-	/*if (_position.x + _tetramino.getTailleX() == 10)
-		_position.x--;
-	if (_position.y + _tetramino.getTailleY() == 22)
-		_position.y--;*/
 	for (int i = 0; i < _tetramino.getTailleX(); i++)
 		for (int j = 0; j < _tetramino.getTailleY(); j++)
 			if (_tetramino.getTetramino()[i][j].getFillColor() != sf::Color::Transparent)
