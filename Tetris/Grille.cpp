@@ -152,7 +152,7 @@ void Grille::handleEvent()
 			_etat = ACTIVATE;
 		}
 		/*
-			Ajout de la pause ici (utiliser un else if)
+			Ajout de la pause ici (utiliser un else if)glavier
 		*/
 		else
 		{

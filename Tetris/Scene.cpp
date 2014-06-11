@@ -10,7 +10,7 @@ _view(w.getDefaultView())
 
 void Scene::lancerJeu()
 {
-	//Detruire menu ici (delete var)
+	//Detruire menu ici (delete var)edfsf
 	_grille = new Grille();
 	_jeuLance = true;
 }
