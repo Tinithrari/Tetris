@@ -5,7 +5,8 @@ _grille(),
 grille(10,vector<sf::RectangleShape>(22,sf::RectangleShape(sf::Vector2f(40.f,40.f)))),
 _position(4,0),
 _tetramino(_tetraminoSuivant),
-_suivant(_tetraminoSuivant)
+_suivant(_tetraminoSuivant),
+_cadreScore(sf::Vector2f(260.f,320.f))
 {
 	srand(time(NULL));
 	_tetraminoSuivant = (TypeTetramino)((int)rand() % 7);
@@ -20,14 +21,15 @@ _suivant(_tetraminoSuivant)
 	_save = 0;
 	_etat = NONE;
 	_attente = false;
+	_cadreScore.setPosition(530,370);
+	_cadreScore.setFillColor(sf::Color(122,122,122,50));
+	_cadreScore.setOutlineColor(sf::Color(71, 71, 71));
+	_cadreScore.setOutlineThickness(5);
+	_score=0;
 }
 
 void Grille::copyTetramino()
 {
-	/*if (_position.x + _tetramino.getTailleX() == 10)
-		_position.x--;
-	if (_position.y + _tetramino.getTailleY() == 22)
-		_position.y--;*/
 	for (int i = 0; i < _tetramino.getTailleX(); i++)
 		for (int j = 0; j < _tetramino.getTailleY(); j++)
 			if (_tetramino.getTetramino()[i][j].getFillColor() != sf::Color::Transparent)
@@ -236,6 +238,7 @@ void Grille::eraseLine()
 					for (int x = 0; x < grille.size(); x++)
 						grille[x][y] = grille[x][y - 1];
 			}
+			_score+=100;
 		}
 		j++;
 	}

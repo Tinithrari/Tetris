@@ -17,6 +17,7 @@ private:
 	tetramino				grille;
 	Tetramino				_tetramino;
 	Tetramino				_suivant;
+	sf::RectangleShape		_cadreScore;
 	// Logique
 	sf::Vector2f			_position;
 	TypeTetramino			_tetraminoSuivant;
@@ -25,6 +26,7 @@ private:
 	Descente				_typeDescente;
 	float					_save;
 	bool					_attente;
+	int						_score; 
 
 public:
 	Grille();
