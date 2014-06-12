@@ -31,7 +31,7 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_textScore.setPosition(265,165);
 	_textScore.setColor(sf::Color::White);
 	_textScore.setCharacterSize(20);
-	_str = "Score : " + _score;
+	_str = "Score : \n" + _score;
 	_textScore.setString(_str);
 }
 
@@ -295,6 +295,7 @@ void Grille::render(sf::RenderTarget &renderer)
 			renderer.draw(grille[i][j]);
 		}
 	}
+	_textScore.setString(_str);
 	renderer.draw(_textScore);
 	_tetramino.draw(renderer,_position.x,_position.y);
 };
