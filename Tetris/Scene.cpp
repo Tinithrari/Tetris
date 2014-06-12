@@ -4,7 +4,8 @@ Scene::Scene(sf::RenderWindow &w) :
 window(w),
 _view(w.getDefaultView())
 {
-	_jeuLance = false;
+	_jeuLance = true;
+	_grille = new Grille();
 	//Construire le menu iciv--et-r-tezf-
 }
 

@@ -6,7 +6,7 @@ grille(10,vector<sf::RectangleShape>(22,sf::RectangleShape(sf::Vector2f(40.f,40.
 _position(4,0),
 _tetramino(_tetraminoSuivant),
 _suivant(_tetraminoSuivant),
-_cadreScore(sf::Vector2f(260.f,320.f))
+_cadreScore(sf::Vector2f(260.f,160.f))
 {
 	srand(time(NULL));
 	_tetraminoSuivant = (TypeTetramino)((int)rand() % 7);
@@ -17,7 +17,7 @@ _cadreScore(sf::Vector2f(260.f,320.f))
 	_grille.setFillColor(sf::Color(122,122,122,50));
 	_grille.setOutlineColor(sf::Color(71, 71, 71));
 	_grille.setOutlineThickness(5);
-	_cadreScore.setPosition(530,370);
+	_cadreScore.setPosition(490,250);
 	_cadreScore.setFillColor(sf::Color(122,122,122,50));
 	_cadreScore.setOutlineColor(sf::Color(71, 71, 71));
 	_cadreScore.setOutlineThickness(5);
