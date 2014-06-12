@@ -294,6 +294,6 @@ void Grille::render(sf::RenderTarget &renderer)
 			renderer.draw(grille[i][j]);
 		}
 	}
-	_renderer.draw(_textScore);
+	renderer.draw(_textScore);
 	_tetramino.draw(renderer,_position.x,_position.y);
 };
