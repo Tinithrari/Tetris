@@ -14,7 +14,7 @@ class Grille{
 private:
 	// Graphique
 	sf::RectangleShape		_grille;
-	tetramino				grille;//iii
+	tetramino				grille;
 	Tetramino				_tetramino;
 	Tetramino				_suivant;
 	// Logique
