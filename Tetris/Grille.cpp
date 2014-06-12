@@ -217,7 +217,6 @@ void Grille::update()
 			exit(0);
 	}
 	_typeDescente = NORMAL;
-	_etat = NONE;
 };
 
 int Grille::getScore(){
