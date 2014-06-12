@@ -26,7 +26,12 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_etat = NONE;
 	_score = 0;
 	_attente = false;
-
+	sf::Font font;
+	assert(font.loadFromFile("police.ttf")==true);
+	_textScore.setFont(font);
+	_textScore.setPosition(265,165);
+	_textScore.setColor(sf::Color::White);
+	_textScore.setCharacterSize(50);
 }
 
 Grille::~Grille()
@@ -217,6 +222,7 @@ void Grille::update()
 			exit(0);
 	}
 	_typeDescente = NORMAL;
+	_textScore.setString("Score : \n " + _score);
 };
 
 int Grille::getScore(){
@@ -281,10 +287,13 @@ void Grille::render(sf::RenderTarget &renderer)
 	renderer.draw(_grille);
 	renderer.draw(_cadreScore);
 	for (int i = 0; i < grille.size(); i++)
+	{
 		for (int j = 0; j < grille[i].size(); j++)
 		{
 			grille[i][j].setPosition(40*i+40,40*j+40);
 			renderer.draw(grille[i][j]);
 		}
+	}
+	_renderer.draw(_textScore);
 	_tetramino.draw(renderer,_position.x,_position.y);
 };
