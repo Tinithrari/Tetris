@@ -29,6 +29,7 @@ private:
 	float					_save;
 	bool					_attente;
 	int						_score;
+	sf::Font				_font;
 
 public:
 	Grille();
