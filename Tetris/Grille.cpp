@@ -27,7 +27,7 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_score = 0;
 	_attente = false;
 	sf::Font font;
-	assert(font.loadFromFile("police.ttf")==true);
+	font.loadFromFile("police.ttf");
 	_textScore.setFont(font);
 	_textScore.setPosition(265,165);
 	_textScore.setColor(sf::Color::White);
