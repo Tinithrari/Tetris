@@ -30,6 +30,7 @@ private:
 	bool					_attente;
 	int						_score;
 	sf::Font				_font;
+	string					_str;
 
 public:
 	Grille();

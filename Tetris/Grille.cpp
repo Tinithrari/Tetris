@@ -31,6 +31,7 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_textScore.setPosition(265,165);
 	_textScore.setColor(sf::Color::White);
 	_textScore.setCharacterSize(20);
+	_str = "Score : " + _score;
 }
 
 Grille::~Grille()
@@ -221,7 +222,7 @@ void Grille::update()
 			exit(0);
 	}
 	_typeDescente = NORMAL;
-	_textScore.setString("Score : \n " + _score);
+	_str = "Score : \n" + _score;
 };
 
 int Grille::getScore(){
