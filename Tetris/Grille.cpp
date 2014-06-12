@@ -30,7 +30,7 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_textScore.setFont(_font);
 	_textScore.setPosition(265,165);
 	_textScore.setColor(sf::Color::White);
-	_textScore.setCharacterSize(50);
+	_textScore.setCharacterSize(20);
 }
 
 Grille::~Grille()
