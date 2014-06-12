@@ -223,7 +223,6 @@ void Grille::update()
 			exit(0);
 	}
 	_typeDescente = NORMAL;
-	_str = "Score : \n" + _score;
 };
 
 int Grille::getScore(){
@@ -295,6 +294,9 @@ void Grille::render(sf::RenderTarget &renderer)
 			renderer.draw(grille[i][j]);
 		}
 	}
+	stringstream ss;
+	ss << _score;
+	_str = "Score : " + ss.str();
 	_textScore.setString(_str);
 	renderer.draw(_textScore);
 	_tetramino.draw(renderer,_position.x,_position.y);

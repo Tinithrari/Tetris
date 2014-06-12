@@ -5,6 +5,7 @@
 #include <time.h>
 #include <iostream>
 #include <cassert>
+#include <sstream>
 
 using namespace std;
 
