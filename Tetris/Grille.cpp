@@ -35,9 +35,9 @@ _cadreSuivant(sf::Vector2f(260.f,260.f))
 	_attente = false;
 	_font.loadFromFile("police.ttf");
 	_textScore.setFont(_font);
-	_textScore.setPosition(490,250);
+	_textScore.setPosition(490,429);
 	_textScore.setColor(sf::Color::White);
-	_textScore.setCharacterSize(20);
+	_textScore.setCharacterSize(22);
 	_str = "Score : \n" + _score;
 	_textScore.setString(_str);
 }
