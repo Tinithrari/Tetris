@@ -20,6 +20,7 @@ private:
 	Tetramino				_tetramino;
 	Tetramino				_suivant;
 	sf::RectangleShape		_cadreScore;
+	sf::RectangleShape		_cadreSuivant;
 	sf::Text				_textScore;
 	// Logique
 	sf::Vector2f			_position;

@@ -6,7 +6,8 @@ grille(10,vector<sf::RectangleShape>(22,sf::RectangleShape(sf::Vector2f(40.f,40.
 _position(4,0),
 _tetramino(_tetraminoSuivant),
 _suivant(_tetraminoSuivant),
-_cadreScore(sf::Vector2f(260.f,160.f))
+_cadreScore(sf::Vector2f(260.f,160.f)),
+_cadreSuivant(sf::Vector2f(260.f,160.f))
 {
 	srand(time(NULL));
 	_tetraminoSuivant = (TypeTetramino)((int)rand() % 7);
@@ -17,10 +18,16 @@ _cadreScore(sf::Vector2f(260.f,160.f))
 	_grille.setFillColor(sf::Color(122,122,122,50));
 	_grille.setOutlineColor(sf::Color(71, 71, 71));
 	_grille.setOutlineThickness(5);
+	
 	_cadreScore.setPosition(490,250);
 	_cadreScore.setFillColor(sf::Color(122,122,122,50));
 	_cadreScore.setOutlineColor(sf::Color(71, 71, 71));
 	_cadreScore.setOutlineThickness(5);
+	
+	_cadreSuivant.setPosition(490,110);	
+	_cadreSuivant.setFillColor(sf::Color(122,122,122,50));
+	_cadreSuivant.setOutlineColor(sf::Color(71, 71, 71));
+	_cadreSuivant.setOutlineThickness(5);
 	_clock.restart();
 	_save = 0;
 	_etat = NONE;
@@ -53,6 +60,9 @@ void Grille::nouveauTetramino(){
 	_tetramino.creerNouveauTetramino();
 	_tetramino.genere();
 	_tetraminoSuivant = (TypeTetramino)((int)rand() % 7);
+	_suivant.setNouveauType(_tetraminoSuivant);
+	_suivant.creerNouveauTetramino();
+	_suivant.genere();
 	_position.x = 4;
 	_position.y = 0;
 }
@@ -285,6 +295,8 @@ void Grille::descenteInstantanee()
 void Grille::render(sf::RenderTarget &renderer)
 {
 	renderer.draw(_grille);
+	renderer.draw(_cadreSuivant);
+	_suivant.draw(renderer,13,4);
 	renderer.draw(_cadreScore);
 	for (int i = 0; i < grille.size(); i++)
 	{
