@@ -144,8 +144,10 @@ void Grille::handleEvent()
 		{
 			_tetramino.tourneADroite();
 			if (_position.y + _tetramino.getTailleY() > 21)
-				while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision() || collisionGauche() || collisionDroite() || enFusion())
+				while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
 					_position.y--;
+			while (enCollision() || collisionGauche() || collisionDroite() || enFusion())
+				_position.y--;
 			if (_position.x + _tetramino.getTailleY() > 10)
 				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
 					_position.x--;
