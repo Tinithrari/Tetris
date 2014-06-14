@@ -152,7 +152,7 @@ void Grille::handleEvent()
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
 		{
 			if (_position.y + _tetramino.getTailleY() > 21)
-				for (int i = (_position.y + _tetramino.getTailleY()) - 21; i > 0; i--)
+			while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision() || collisionGauche() || collisionDroite())
 					_position.y--;
 			if (_position.x + _tetramino.getTailleY() > 10)
 				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
@@ -164,6 +164,11 @@ void Grille::handleEvent()
 				_position.x--;
 			if (enCollision())
 				_position.y--;
+			if (_attente)
+			{
+				_attente = false;
+				_save = _position.y;
+			}
 			_etat = ACTIVATE;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _etat == NONE){
@@ -203,7 +208,7 @@ void Grille::update()
 	}
 	if (enCollision() && !_attente && _typeDescente != INST)
 	{
-		_save = _clock.restart().asSeconds();
+		_clock.restart().asSeconds();
 		_attente = true;
 	}
 	else if (_attente)
