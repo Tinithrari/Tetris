@@ -118,6 +118,14 @@ bool Grille::collisionGauche(){
 	return false;
 }
 
+bool Grille::enFusion(){
+	for (int i = _position.x; i < _position.x + _tetramino.getTailleX(); i++)
+		for (int j = _position.y; j < _position.y + _tetramino.getTailleY(); j++)
+			if (grille[i][j].getFillColor() != sf::Color::Transparent)
+				return true;
+	return false;
+}
+
 void Grille::handleEvent()
 {
 	if (sf::Event::KeyPressed)
@@ -136,7 +144,7 @@ void Grille::handleEvent()
 		{
 			_tetramino.tourneADroite();
 			if (_position.y + _tetramino.getTailleY() > 21)
-				for (int i = (_position.y + _tetramino.getTailleY())-21; i > 0; i--)
+				while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision() || collisionGauche() || collisionDroite() || enFusion())
 					_position.y--;
 			if (_position.x + _tetramino.getTailleY() > 10)
 				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
@@ -147,12 +155,17 @@ void Grille::handleEvent()
 				_position.x--;
 			if (enCollision())
 				_position.y--;
+			if (_attente)
+			{
+				_attente = false;
+				_save = _position.y;
+			}
 			_etat = ACTIVATE;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
 		{
 			if (_position.y + _tetramino.getTailleY() > 21)
-			while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision() || collisionGauche() || collisionDroite())
+			while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
 					_position.y--;
 			if (_position.x + _tetramino.getTailleY() > 10)
 				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
@@ -162,7 +175,7 @@ void Grille::handleEvent()
 			_tetramino.tourneAGauche();
 			if (collisionDroite())
 				_position.x--;
-			if (enCollision())
+			while (enCollision() || collisionGauche() || collisionDroite() || enFusion())
 				_position.y--;
 			if (_attente)
 			{
@@ -191,6 +204,11 @@ void Grille::handleEvent()
 
 void Grille::update()
 {
+	if (_attente && !enCollision())
+	{
+		_attente = false;
+		_save = _position.y;
+	}
 	if (!enCollision())
 	{
 		switch (_typeDescente)

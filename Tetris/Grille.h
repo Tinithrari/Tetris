@@ -39,6 +39,7 @@ public:
 	~Grille();
 	void copyTetramino();
 	bool enCollision();
+	bool enFusion();
 	bool collisionDroite();
 	bool collisionGauche();
 	void handleEvent();
