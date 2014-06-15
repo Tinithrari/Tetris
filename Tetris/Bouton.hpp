@@ -18,6 +18,7 @@ private:
 	sf::Vector2i			_position;
 	sf::Font				_font;
 	Statement				_state;
+	string					_string;
 
 public:
 	Bouton(int posX, int posY, string label);

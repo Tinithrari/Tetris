@@ -1,18 +1,17 @@
 #include "Pause.hpp"
 
 Pause::Pause(sf::RenderWindow& w):
-_background(w.getSize()),
+_background(sf::Vector2f(w.getSize())),
 _reprendre(225,250,"Reprendre"),
-_quitter(383,350,"Quitter") 
+_quitter(275,400,"Quitter") 
 {
 	_background.setFillColor(sf::Color(0,0,0,125));
 	_background.setPosition(sf::Vector2f(0,0));
-	assert(_font.loadFromFile("police.ttf")==true);
+	_font.loadFromFile("police.ttf");
 	_tPause.setFont(_font);
-	_tPause.setString("Pause");
 	_tPause.setColor(sf::Color::White);
 	_tPause.setCharacterSize(50);
-	_tPause.setPosition(sf::Vector2f(387,150));
+	_tPause.setPosition(sf::Vector2f(325,150));
 	_etat=NONE;
 }
 
@@ -26,13 +25,13 @@ void Pause::processEvent(sf::RenderWindow& w)
 	_quitter.processEvent(w);
 	_reprendre.update();
 	_quitter.update();
-	if(_reprendre.getState()==Bouton::ACTIVATE)
+	if(_reprendre.getState()==Bouton::ENABLE)
 		_etat=REPRENDRE;
-	else if(_quitter.getState()==Bouton::ACTIVATE)
+	else if(_quitter.getState()==Bouton::ENABLE)
 		_etat=QUITTER;
 }
 
-Etat Pause::getEtat()
+Pause::Etat Pause::getEtat()
 {
 	return _etat;
 }
@@ -41,7 +40,8 @@ Etat Pause::getEtat()
 void Pause::render(sf::RenderTarget& renderer)
 {
 	renderer.draw(_background);
-	renderer.draw(_tPause);
 	_reprendre.render(renderer);
 	_quitter.render(renderer);
+	_tPause.setString("Pause");
+	renderer.draw(_tPause);
 }

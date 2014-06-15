@@ -131,7 +131,7 @@ void Grille::handleEvent(sf::RenderWindow &w)
 {
 	if (sf::Event::KeyPressed)
 	{
-		if (_stateGame=PLAYED)
+		if (_stateGame==PLAYED)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
@@ -198,34 +198,35 @@ void Grille::handleEvent(sf::RenderWindow &w)
 				_typeDescente = INST;
 				_etat = ACTIVATE;
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PLAYED) {
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PLAYED && _etat == NONE) {
 				_stateGame=PAUSED;
-				_pause=new Pause();
+				_etat = ACTIVATE;
+				_pause=new Pause(w);
 			}
 			else
 			{
-				_etat = NONE;
 				_typeDescente = NORMAL;
 			}
 		}
 		else
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PAUSED) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PAUSED && _etat == NONE) {
 				_stateGame=PLAYED;
+				_etat = ACTIVATE;
 				_clock.restart();
 				delete _pause; 
 			}
 		}
 	}
-	else if (_stateGame==PAUSED) {
+	if (_stateGame==PAUSED) {
 		_pause->processEvent(w);
-		if (_pause->getEtat() == REPRENDRE)
+		if (_pause->getEtat() == Pause::REPRENDRE)
 		{
 			_stateGame=PLAYED;
 			_clock.restart();
 			delete _pause;
 		}
-		if (_pause->getEtat() == QUITTER)
+		if (_pause->getEtat() == Pause::QUITTER)
 		{
 			delete _pause;
 			exit(0);
@@ -235,35 +236,49 @@ void Grille::handleEvent(sf::RenderWindow &w)
 
 void Grille::update()
 {
-	if (_attente && !enCollision())
+	if (_stateGame == PLAYED)
 	{
-		_attente = false;
-		_save = _position.y;
-	}
-	if (!enCollision())
-	{
-		switch (_typeDescente)
+		if (_attente && !enCollision())
 		{
-		case NORMAL:
-			descenteNormal();
-			break;
-		case RAPIDE:
-			descenteRapide();
-			break;
-		case INST:
-			descenteInstantanee();
-			break;
+			_attente = false;
+			_save = _position.y;
 		}
-	}
-	if (enCollision() && !_attente && _typeDescente != INST)
-	{
-		_clock.restart().asSeconds();
-		_attente = true;
-	}
-	else if (_attente)
-	{
-		_save = _clock.getElapsedTime().asSeconds();
-		if (_save > 1)
+		if (!enCollision())
+		{
+			switch (_typeDescente)
+			{
+			case NORMAL:
+				descenteNormal();
+				break;
+			case RAPIDE:
+				descenteRapide();
+				break;
+			case INST:
+				descenteInstantanee();
+				break;
+			}
+		}
+		if (enCollision() && !_attente && _typeDescente != INST)
+		{
+			_clock.restart().asSeconds();
+			_attente = true;
+		}
+		else if (_attente)
+		{
+			_save = _clock.getElapsedTime().asSeconds();
+			if (_save > 1)
+			{
+				copyTetramino();
+				eraseLine();
+				nouveauTetramino();
+				_clock.restart();
+				_attente = false;
+				_save = 0;
+				if (enCollision())
+					exit(0);
+			}
+		}
+		else if (_typeDescente == INST)
 		{
 			copyTetramino();
 			eraseLine();
@@ -274,19 +289,9 @@ void Grille::update()
 			if (enCollision())
 				exit(0);
 		}
+		_typeDescente = NORMAL;
 	}
-	else if (_typeDescente == INST)
-	{
-		copyTetramino();
-		eraseLine();
-		nouveauTetramino();
-		_clock.restart();
-		_attente = false;
-		_save = 0;
-		if (enCollision())
-			exit(0);
-	}
-	_typeDescente = NORMAL;
+	_etat = NONE;
 };
 
 int Grille::getScore(){
@@ -366,4 +371,8 @@ void Grille::render(sf::RenderTarget &renderer)
 	_textScore.setString(_str);
 	renderer.draw(_textScore);
 	_tetramino.draw(renderer,_position.x,_position.y);
+	if (_stateGame == PAUSED)
+	{
+		_pause->render(renderer);
+	}
 };

@@ -27,10 +27,10 @@
     <ClInclude Include="Grille.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Pause.hpp">
+    <ClInclude Include="Bouton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bouton.hpp">
+    <ClInclude Include="Pause.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClCompile Include="Grille.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Pause.cpp">
+    <ClCompile Include="Bouton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bouton.cpp">
+    <ClCompile Include="Pause.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -19,18 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Pause.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bouton.hpp" />
     <ClInclude Include="Grille.h" />
+    <ClInclude Include="Pause.hpp" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Tetramino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Pause.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Bouton.cpp" />
     <ClCompile Include="Grille.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Tetramino.cpp" />
   </ItemGroup>

@@ -19,7 +19,7 @@ void Scene::lancerJeu()
 void Scene::handleEvent(sf::RenderWindow &w)
 {
 	if (_jeuLance)
-		_grille->handleEvent();
+		_grille->handleEvent(w);
 }
 
 void Scene::update()

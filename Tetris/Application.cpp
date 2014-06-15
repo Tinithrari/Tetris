@@ -12,7 +12,7 @@ void Application::processEvent()
 	sf::Event event;
 	while (_window.pollEvent(event))
 	{
-		_scene.handleEvent();
+		_scene.handleEvent(_window);
 		if (event.type == sf::Event::Closed)
 		{
 			_window.close();
