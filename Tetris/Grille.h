@@ -6,13 +6,17 @@
 #include <iostream>
 #include <cassert>
 #include <sstream>
+#include "Pause.hpp"
 
 using namespace std;
 
-enum Statement{ NONE, ACTIVATE};
-enum Descente { NORMAL, RAPIDE, INST};
-
 class Grille{
+
+public:
+	enum Statement{ NONE, ACTIVATE};
+	enum Descente { NORMAL, RAPIDE, INST};
+	enum StateGame { PLAYED,PAUSED,OVER };
+
 private:
 	// Graphique
 	sf::RectangleShape		_grille;
@@ -22,6 +26,7 @@ private:
 	sf::RectangleShape		_cadreScore;
 	sf::RectangleShape		_cadreSuivant;
 	sf::Text				_textScore;
+	Pause*					_pause;
 	// Logique
 	sf::Vector2f			_position;
 	TypeTetramino			_tetraminoSuivant;
@@ -33,6 +38,7 @@ private:
 	int						_score;
 	sf::Font				_font;
 	string					_str;
+	StateGame				_stateGame;
 
 public:
 	Grille();

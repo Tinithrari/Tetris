@@ -40,6 +40,7 @@ _cadreSuivant(sf::Vector2f(260.f,260.f))
 	_textScore.setCharacterSize(22);
 	_str = "Score : \n" + _score;
 	_textScore.setString(_str);
+	_stateGame=PLAYED;
 }
 
 Grille::~Grille()
@@ -130,78 +131,104 @@ void Grille::handleEvent(sf::RenderWindow &w)
 {
 	if (sf::Event::KeyPressed)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (_stateGame=PLAYED)
 		{
-			if (_position.x + _tetramino.getTailleX() < 10 && !collisionDroite())
-				_position.x++;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !collisionGauche())
-		{
-			if (_position.x > 0)
-				_position.x--;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && _etat == NONE)
-		{
-			_tetramino.tourneADroite();
-			if (_position.y + _tetramino.getTailleY() > 21)
-				while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision())
-					_position.y--;
-			while (enFusion())
-				_position.y--;
-			if (_position.x + _tetramino.getTailleY() > 10)
-				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
-					_position.x--;
-			if (_position.x + _tetramino.getTailleX() >= 10)
-				_position.x--;
-			if (collisionDroite())
-				_position.x--;
-			if (enCollision())
-				_position.y--;
-			if (_attente)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				_attente = false;
-				_save = _position.y;
+				if (_position.x + _tetramino.getTailleX() < 10 && !collisionDroite())
+					_position.x++;
 			}
-			_etat = ACTIVATE;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
-		{
-			if (_position.y + _tetramino.getTailleY() > 21)
-			while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
-					_position.y--;
-			if (_position.x + _tetramino.getTailleY() > 10)
-				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
-					_position.x--;
-			if (_position.x + _tetramino.getTailleX() >= 10)
-				_position.x--;
-			_tetramino.tourneAGauche();
-			if (collisionDroite())
-				_position.x--;
-			while (enCollision())
-				_position.y--;
-			while (enFusion())
-				_position.y--;
-			if (_attente)
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !collisionGauche())
 			{
-				_attente = false;
-				_save = _position.y;
+				if (_position.x > 0)
+					_position.x--;
 			}
-			_etat = ACTIVATE;
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && _etat == NONE)
+			{
+				_tetramino.tourneADroite();
+				if (_position.y + _tetramino.getTailleY() > 21)
+					while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision())
+						_position.y--;
+				while (enFusion())
+					_position.y--;
+				if (_position.x + _tetramino.getTailleY() > 10)
+					for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
+						_position.x--;
+				if (_position.x + _tetramino.getTailleX() >= 10)
+					_position.x--;
+				if (collisionDroite())
+					_position.x--;
+				if (enCollision())
+					_position.y--;
+				if (_attente)
+				{
+					_attente = false;
+					_save = _position.y;
+				}
+				_etat = ACTIVATE;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
+			{
+				if (_position.y + _tetramino.getTailleY() > 21)
+				while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
+						_position.y--;
+				if (_position.x + _tetramino.getTailleY() > 10)
+					for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
+						_position.x--;
+				if (_position.x + _tetramino.getTailleX() >= 10)
+					_position.x--;
+				_tetramino.tourneAGauche();
+				if (collisionDroite())
+					_position.x--;
+				while (enCollision())
+					_position.y--;
+				while (enFusion())
+					_position.y--;
+				if (_attente)
+				{
+					_attente = false;
+					_save = _position.y;
+				}
+				_etat = ACTIVATE;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _etat == NONE){
+				_typeDescente = RAPIDE;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && _etat == NONE){ 
+				_typeDescente = INST;
+				_etat = ACTIVATE;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PLAYED) {
+				_stateGame=PAUSED;
+				_pause=new Pause();
+			}
+			else
+			{
+				_etat = NONE;
+				_typeDescente = NORMAL;
+			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _etat == NONE){
-			_typeDescente = RAPIDE;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && _etat == NONE){
-			_typeDescente = INST;
-			_etat = ACTIVATE;
-		}
-		/*
-			Ajout de la pause ici (utiliser un else if)
-		*/
 		else
 		{
-			_etat = NONE;
-			_typeDescente = NORMAL;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PAUSED) {
+				_stateGame=PLAYED;
+				_clock.restart();
+				delete _pause; 
+			}
+		}
+	}
+	else if (_stateGame==PAUSED) {
+		_pause->processEvent(w);
+		if (_pause->getEtat() == REPRENDRE)
+		{
+			_stateGame=PLAYED;
+			_clock.restart();
+			delete _pause;
+		}
+		if (_pause->getEtat() == QUITTER)
+		{
+			delete _pause;
+			exit(0);
 		}
 	}
 };

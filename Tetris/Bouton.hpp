@@ -6,6 +6,7 @@ using namespace std;
 
 class Bouton {
 
+public:
 	enum Statement {DISABLE, FOCUS, ENABLE};
 
 private:
