@@ -16,7 +16,7 @@ void Scene::lancerJeu()
 	_jeuLance = true;
 }
 
-void Scene::handleEvent()
+void Scene::handleEvent(sf::RenderWindow &w)
 {
 	if (_jeuLance)
 		_grille->handleEvent();

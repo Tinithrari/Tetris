@@ -119,14 +119,14 @@ bool Grille::collisionGauche(){
 }
 
 bool Grille::enFusion(){
-	for (int i = _position.x; i < _position.x + _tetramino.getTailleX(); i++)
-		for (int j = _position.y; j < _position.y + _tetramino.getTailleY(); j++)
-			if (grille[i][j].getFillColor() != sf::Color::Transparent)
+	for (int i = 0 ; i < _tetramino.getTailleX(); i++)
+		for (int j = 0; j < _tetramino.getTailleY(); j++)
+			if (grille[i+_position.x][j+_position.y].getFillColor() != sf::Color::Transparent && _tetramino.getTetramino()[i][j].getFillColor() != sf::Color::Transparent)
 				return true;
 	return false;
 }
 
-void Grille::handleEvent()
+void Grille::handleEvent(sf::RenderWindow &w)
 {
 	if (sf::Event::KeyPressed)
 	{
@@ -144,9 +144,9 @@ void Grille::handleEvent()
 		{
 			_tetramino.tourneADroite();
 			if (_position.y + _tetramino.getTailleY() > 21)
-				while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
+				while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision())
 					_position.y--;
-			while (enCollision() || collisionGauche() || collisionDroite() || enFusion())
+			while (enFusion())
 				_position.y--;
 			if (_position.x + _tetramino.getTailleY() > 10)
 				for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
@@ -177,7 +177,9 @@ void Grille::handleEvent()
 			_tetramino.tourneAGauche();
 			if (collisionDroite())
 				_position.x--;
-			while (enCollision() || collisionGauche() || collisionDroite() || enFusion())
+			while (enCollision())
+				_position.y--;
+			while (enFusion())
 				_position.y--;
 			if (_attente)
 			{

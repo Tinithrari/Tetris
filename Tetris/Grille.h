@@ -42,7 +42,7 @@ public:
 	bool enFusion();
 	bool collisionDroite();
 	bool collisionGauche();
-	void handleEvent();
+	void handleEvent(sf::RenderWindow &w);
 	void update();
 	void eraseLine();
 	void nouveauTetramino();

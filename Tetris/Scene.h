@@ -15,7 +15,7 @@ private:
 public:
 	Scene(sf::RenderWindow &w);
 	void lancerJeu();
-	void handleEvent();
+	void handleEvent(sf::RenderWindow &w);
 	void update();
 	void draw();
 };
