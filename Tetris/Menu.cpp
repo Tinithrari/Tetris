@@ -1,12 +1,11 @@
-#include "Menu.h"
-
+#include "Menu.hpp"
 
 using namespace std;
 
 Menu::Menu():
-_jouer(275.0,300.0,"Jouer"),
-_options(225.0,450.0,"Options"),
-_quitter(225.0,600.0,"Quitter")
+_jouer(275, 300, "Jouer"),
+_options(225, 450, "Options"),
+_quitter(225, 600, "Quitter")
 {
     _etat=NONE;
 }

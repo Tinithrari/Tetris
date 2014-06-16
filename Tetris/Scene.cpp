@@ -2,11 +2,10 @@
 
 Scene::Scene(sf::RenderWindow &w) :
 window(w),
-_view(w.getDefaultView())
+_view(w.getDefaultView()),
+_menu(new Menu())
 {
 	_jeuLance = false;
-	_menu = new Menu();
-	//Construire le menu iciv--et-r-tezf-
 }
 
 void Scene::lancerJeu()
@@ -23,6 +22,11 @@ void Scene::handleEvent(sf::RenderWindow &w)
 		_menu->handleEvent(w);
 		if (_menu->getEtat() == Menu::RUN)
 			lancerJeu();
+		if (_menu->getEtat() == Menu::EXIT)
+		{
+			delete _menu;
+			exit(0);
+		}
 	}
 		
 	if (_jeuLance)
@@ -38,4 +42,6 @@ void Scene::update()
 void Scene::draw(){
 	if (_jeuLance)
 		_grille->render(window);
+	if (!_jeuLance)
+		_menu->render(window);
 }

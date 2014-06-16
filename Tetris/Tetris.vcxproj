@@ -22,7 +22,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bouton.hpp" />
     <ClInclude Include="Grille.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Menu.hpp" />
     <ClInclude Include="Pause.hpp" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Tetramino.h" />

@@ -1,3 +1,6 @@
+#ifndef BOUTON_H
+#define BOUTON_H
+
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <string>
@@ -29,3 +32,5 @@ public:
 	void update();
 	void render(sf::RenderTarget &renderer);
 };
+
+#endif

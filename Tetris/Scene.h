@@ -1,5 +1,5 @@
 #include "Grille.h"
-#include "Menu.h"
+#include "Menu.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
