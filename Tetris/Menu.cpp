@@ -3,12 +3,10 @@
 
 using namespace std;
 
-Menu::Menu()
-_window(sf::VideoMode(800, 960), "Tetris"),
-_jouer(10.0,50.0,"Jouer"),
-_options(10.0,100.0,"Options"),
-_quitter(10.0,150.0,"Quitter"),
-_scene(_window)
+Menu::Menu():
+_jouer(275.0,300.0,"Jouer"),
+_options(225.0,450.0,"Options"),
+_quitter(225.0,600.0,"Quitter")
 {
     _etat=NONE;
 }
@@ -18,48 +16,36 @@ Menu::~Menu()
 
 }
 
-void Menu::handleEvent()
+void Menu::handleEvent(sf::RenderWindow &w)
 {
-    _jouer.processEvent();
-    _options.processEvent();
-    _quitter.processEvent();
-    if(_jouer.getState())==ENABLE)
+    _jouer.processEvent(w);
+    _options.processEvent(w);
+    _quitter.processEvent(w);
+	_jouer.update();
+	_options.update();
+	_quitter.update();
+    if(_jouer.getState()==Bouton::ENABLE)
     {
         _etat=RUN;
     }
-    if(_options.getState()==ENABLE)
+	if (_options.getState() == Bouton::ENABLE)
     {
         _etat=OPTIONS;
     }
-    if(_quitter.getState()==ENABLE)
+	if (_quitter.getState() == Bouton::ENABLE)
     {
         _etat=EXIT;
     }
+	
 }
 
-void Menu::update()
+Menu::Etat Menu::getEtat()
 {
-    _jouer.update();
-    _options.update();
-    _quitter.update();
-    if(_etat==RUN)
-    {
-        // quitte le menu pour lancer le jeu
-    }
-    if(_etat==OPTIONS)
-    {
-        // lance la fenetre des options
-    }
-    if(_etat==EXIT)
-    {
-        // quitte le menu et la fenetre
-    }
-
+	return _etat;
 }
-
 void Menu::render(sf::RenderTarget &renderer)
 {
-    _jouer.render();
-    _options.render();
-    _quitter.render();
+	_jouer.render(renderer);
+	_options.render(renderer);
+	_quitter.render(renderer);
 }

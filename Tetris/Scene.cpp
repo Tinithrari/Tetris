@@ -4,20 +4,27 @@ Scene::Scene(sf::RenderWindow &w) :
 window(w),
 _view(w.getDefaultView())
 {
-	_jeuLance = true;
-	_grille = new Grille();
+	_jeuLance = false;
+	_menu = new Menu();
 	//Construire le menu iciv--et-r-tezf-
 }
 
 void Scene::lancerJeu()
 {
-	//Detruire menu ici (delete var)edfsf
+	delete _menu;
 	_grille = new Grille();
 	_jeuLance = true;
 }
 
 void Scene::handleEvent(sf::RenderWindow &w)
 {
+	if (!_jeuLance)
+	{
+		_menu->handleEvent(w);
+		if (_menu->getEtat() == Menu::RUN)
+			lancerJeu();
+	}
+		
 	if (_jeuLance)
 		_grille->handleEvent(w);
 }

@@ -1,4 +1,5 @@
 #include "Grille.h"
+#include "Menu.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -11,6 +12,7 @@ private:
 	sf::View			_view;
 	sf::RenderWindow	&window;
 	bool				_jeuLance;
+	Menu*				_menu;
 
 public:
 	Scene(sf::RenderWindow &w);
