@@ -136,7 +136,7 @@ bool Grille::collisionGauche(){
 bool Grille::enFusion(){
 	for (int i = 0 ; i < _tetramino.getTailleX(); i++)
 		for (int j = 0; j < _tetramino.getTailleY(); j++)
-			if (grille[i+_position.x][j+_position.y].getFillColor() != sf::Color::Transparent && _tetramino.getTetramino()[i][j].getFillColor() != sf::Color::Transparent)
+			if ((grille[i+_position.x][j+_position.y].getFillColor() != sf::Color::Transparent) && (_tetramino.getTetramino()[i][j].getFillColor() != sf::Color::Transparent))
 				return true;
 	return false;
 }
@@ -145,7 +145,7 @@ void Grille::handleEvent(sf::RenderWindow &w)
 {
 	if (sf::Event::KeyPressed)
 	{
-		if (_stateGame==PLAYED)
+		if (_stateGame == PLAYED)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
@@ -160,44 +160,54 @@ void Grille::handleEvent(sf::RenderWindow &w)
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && _etat == NONE)
 			{
 				_tetramino.tourneADroite();
-				if (_position.y + _tetramino.getTailleY() > 21)
+				if (!enFusion())
+				{
+					if (_position.y + _tetramino.getTailleY() > 21)
 					while ((_position.y + _tetramino.getTailleY()) - 21 > 0 || enCollision())
 						_position.y--;
-				while (enFusion())
-					_position.y--;
-				if (_position.x + _tetramino.getTailleY() > 10)
-					for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
+					while (enFusion())
+						_position.y--;
+					if (_position.x + _tetramino.getTailleY() > 10)
+						for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
+							_position.x--;
+					if (_position.x + _tetramino.getTailleX() >= 10)
 						_position.x--;
-				if (_position.x + _tetramino.getTailleX() >= 10)
-					_position.x--;
-				if (collisionDroite())
-					_position.x--;
-				if (enCollision())
-					_position.y--;
-				if (_attente)
-				{
-					_attente = false;
-					_save = _position.y;
+					if (collisionDroite())
+						_position.x--;
+					if (enCollision())
+						_position.y--;
+					if (_attente)
+					{
+						_attente = false;
+						_save = _position.y;
+					}
 				}
+				else
+					_tetramino.tourneAGauche();
 				_etat = ACTIVATE;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
 			{
-				if (_position.y + _tetramino.getTailleY() > 21)
-				while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
-						_position.y--;
-				if (_position.x + _tetramino.getTailleY() > 10)
-					for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
-						_position.x--;
-				if (_position.x + _tetramino.getTailleX() >= 10)
-					_position.x--;
 				_tetramino.tourneAGauche();
-				if (collisionDroite())
-					_position.x--;
-				while (enCollision())
-					_position.y--;
-				while (enFusion())
-					_position.y--;
+				if (!enFusion())
+				{
+					if (_position.y + _tetramino.getTailleY() > 21)
+					while ((_position.y + _tetramino.getTailleY()) - 21 > 0)
+						_position.y--;
+					if (_position.x + _tetramino.getTailleY() > 10)
+						for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
+							_position.x--;
+					if (_position.x + _tetramino.getTailleX() >= 10)
+						_position.x--;
+					if (collisionDroite())
+						_position.x--;
+					while (enCollision())
+						_position.y--;
+				}
+				else
+				{
+					_tetramino.tourneADroite();
+				}
 				if (_attente)
 				{
 					_attente = false;
@@ -208,15 +218,15 @@ void Grille::handleEvent(sf::RenderWindow &w)
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _etat == NONE){
 				_typeDescente = RAPIDE;
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && _etat == NONE){ 
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && _etat == NONE){
 				_typeDescente = INST;
 				_etat = ACTIVATE;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PLAYED && _etat == NONE) {
-				_stateGame=PAUSED;
+				_stateGame = PAUSED;
 				_etat = ACTIVATE;
 				_music.pause();
-				_pause=new Pause(w);
+				_pause = new Pause(w);
 			}
 			else
 			{
@@ -226,27 +236,27 @@ void Grille::handleEvent(sf::RenderWindow &w)
 		else
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PAUSED && _etat == NONE) {
-				_stateGame=PLAYED;
+				_stateGame = PLAYED;
 				_etat = ACTIVATE;
 				_clock.restart();
 				_music.play();
-				delete _pause; 
+				delete _pause;
 			}
 		}
-	}
-	if (_stateGame==PAUSED) {
-		_pause->processEvent(w);
-		if (_pause->getEtat() == Pause::REPRENDRE)
-		{
-			_stateGame=PLAYED;
-			_clock.restart();
-			_music.play();
-			delete _pause;
-		}
-		if (_pause->getEtat() == Pause::QUITTER)
-		{
-			delete _pause;
-			exit(0);
+		if (_stateGame == PAUSED) {
+			_pause->processEvent(w);
+			if (_pause->getEtat() == Pause::REPRENDRE)
+			{
+				_stateGame = PLAYED;
+				_clock.restart();
+				_music.play();
+				delete _pause;
+			}
+			if (_pause->getEtat() == Pause::QUITTER)
+			{
+				delete _pause;
+				exit(0);
+			}
 		}
 	}
 };
