@@ -160,6 +160,12 @@ void Grille::handleEvent(sf::RenderWindow &w)
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && _etat == NONE)
 			{
 				_tetramino.tourneADroite();
+				int iterator = 0;
+				while (collisionDroite() || (_position.x + _tetramino.getTailleX() >= 10))
+				{
+					_position.x--;
+					iterator++;
+				}
 				if (!enFusion())
 				{
 					if (_position.y + _tetramino.getTailleY() > 21)
@@ -170,10 +176,6 @@ void Grille::handleEvent(sf::RenderWindow &w)
 					if (_position.x + _tetramino.getTailleY() > 10)
 						for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
 							_position.x--;
-					if (_position.x + _tetramino.getTailleX() >= 10)
-						_position.x--;
-					if (collisionDroite())
-						_position.x--;
 					if (enCollision())
 						_position.y--;
 					if (_attente)
@@ -183,12 +185,21 @@ void Grille::handleEvent(sf::RenderWindow &w)
 					}
 				}
 				else
+				{
 					_tetramino.tourneAGauche();
+					_position.x += iterator;
+				}
 				_etat = ACTIVATE;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _etat == NONE)
 			{
 				_tetramino.tourneAGauche();
+				int iterator = 0;
+				while (collisionDroite() || (_position.x + _tetramino.getTailleX() >= 10))
+				{
+					_position.x--;
+					iterator++;
+				}
 				if (!enFusion())
 				{
 					if (_position.y + _tetramino.getTailleY() > 21)
@@ -197,16 +208,13 @@ void Grille::handleEvent(sf::RenderWindow &w)
 					if (_position.x + _tetramino.getTailleY() > 10)
 						for (int i = (_position.x + _tetramino.getTailleY()) - 10; i > 0; i--)
 							_position.x--;
-					if (_position.x + _tetramino.getTailleX() >= 10)
-						_position.x--;
-					if (collisionDroite())
-						_position.x--;
 					while (enCollision())
 						_position.y--;
 				}
 				else
 				{
 					_tetramino.tourneADroite();
+					_position.x += iterator;
 				}
 				if (_attente)
 				{
