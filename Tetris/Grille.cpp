@@ -1,6 +1,6 @@
 #include "Grille.h"
 
-Grille::Grille():
+Grille::Grille(Genre g):
 _grille(),
 grille(10,vector<sf::RectangleShape>(22,sf::RectangleShape(sf::Vector2f(40.f,40.f)))),
 _position(4,0),
@@ -33,7 +33,7 @@ _cadreSuivant(sf::Vector2f(260.f,260.f))
 	_etat = NONE;
 	_score = 0;
 	_attente = false;
-	_font.loadFromFile("police.ttf");
+	_font.loadFromFile("res/font/police.ttf");
 	_textScore.setFont(_font);
 	_textScore.setPosition(490,429);
 	_textScore.setColor(sf::Color::White);
@@ -41,6 +41,20 @@ _cadreSuivant(sf::Vector2f(260.f,260.f))
 	_str = "Score : \n" + _score;
 	_textScore.setString(_str);
 	_stateGame=PLAYED;
+
+	switch (g)
+	{
+	case ORIGINAL :
+		_music.openFromFile("res/audio/original.ogg");
+		break;
+	case METAL :
+		_music.openFromFile("res/audio/metal.ogg");
+		break;
+	}
+
+	_music.setVolume(100);
+	_music.setLoop(true);
+	_music.play();
 }
 
 Grille::~Grille()
@@ -201,6 +215,7 @@ void Grille::handleEvent(sf::RenderWindow &w)
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && _stateGame == PLAYED && _etat == NONE) {
 				_stateGame=PAUSED;
 				_etat = ACTIVATE;
+				_music.pause();
 				_pause=new Pause(w);
 			}
 			else
@@ -214,6 +229,7 @@ void Grille::handleEvent(sf::RenderWindow &w)
 				_stateGame=PLAYED;
 				_etat = ACTIVATE;
 				_clock.restart();
+				_music.play();
 				delete _pause; 
 			}
 		}
@@ -224,6 +240,7 @@ void Grille::handleEvent(sf::RenderWindow &w)
 		{
 			_stateGame=PLAYED;
 			_clock.restart();
+			_music.play();
 			delete _pause;
 		}
 		if (_pause->getEtat() == Pause::QUITTER)

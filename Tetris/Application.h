@@ -4,8 +4,10 @@
 #pragma comment(lib, "jpeg.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "winmm.lib")
-#pragma comment(lib, "gdi32.lib")  
-
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "openal32.lib") 
+#pragma comment(lib, "sndfile.lib")
+#pragma comment(lib, "sfml-audio-s.lib")
 #endif // SFML_STATIC
 
 #include <SFML/Graphics.hpp>

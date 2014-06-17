@@ -1,3 +1,9 @@
+#ifndef GRILLE_H
+#define GRILLE_H
+
+#pragma comment(lib, "openal32.lib") 
+#pragma comment(lib, "sndfile.lib") 
+
 #include <SFML/Graphics.hpp>
 #include "Tetramino.h"
 #include <stdlib.h>
@@ -8,16 +14,21 @@
 #include <sstream>
 #include "Pause.hpp"
 
+#include <SFML/Audio.hpp>
+
 using namespace std;
 
 class Grille{
 
 public:
+	enum Genre {ORIGINAL, METAL};
 	enum Statement{ NONE, ACTIVATE};
 	enum Descente { NORMAL, RAPIDE, INST};
 	enum StateGame { PLAYED,PAUSED,OVER };
 
 private:
+	//Son
+	sf::Music				_music;
 	// Graphique
 	sf::RectangleShape		_grille;
 	tetramino				grille;
@@ -41,7 +52,7 @@ private:
 	StateGame				_stateGame;
 
 public:
-	Grille();
+	Grille(Genre g);
 	~Grille();
 	void copyTetramino();
 	bool enCollision();
@@ -59,3 +70,5 @@ public:
 	void render(sf::RenderTarget &renderer);
 	int getScore();
 };
+
+#endif

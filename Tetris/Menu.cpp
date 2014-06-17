@@ -4,8 +4,7 @@ using namespace std;
 
 Menu::Menu():
 _jouer(275, 300, "Jouer"),
-_options(225, 450, "Options"),
-_quitter(225, 600, "Quitter")
+_quitter(225, 500, "Quitter")
 {
     _etat=NONE;
 }
@@ -15,27 +14,25 @@ Menu::~Menu()
 
 }
 
+Grille::Genre Menu::getGenre(){
+	return _musicSelector.getGenre();
+}
+
 void Menu::handleEvent(sf::RenderWindow &w)
 {
     _jouer.processEvent(w);
-    _options.processEvent(w);
     _quitter.processEvent(w);
 	_jouer.update();
-	_options.update();
 	_quitter.update();
     if(_jouer.getState()==Bouton::ENABLE)
     {
         _etat=RUN;
     }
-	if (_options.getState() == Bouton::ENABLE)
-    {
-        _etat=OPTIONS;
-    }
 	if (_quitter.getState() == Bouton::ENABLE)
     {
         _etat=EXIT;
     }
-	
+	_musicSelector.processEvent(w);
 }
 
 Menu::Etat Menu::getEtat()
@@ -45,6 +42,6 @@ Menu::Etat Menu::getEtat()
 void Menu::render(sf::RenderTarget &renderer)
 {
 	_jouer.render(renderer);
-	_options.render(renderer);
 	_quitter.render(renderer);
+	_musicSelector.render(renderer);
 }

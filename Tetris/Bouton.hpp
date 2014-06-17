@@ -29,6 +29,7 @@ public:
 	Statement getState();
 	sf::Vector2i getPosition();
 	void processEvent(sf::RenderWindow &w);
+	void setCharacterSize(int s);
 	void update();
 	void render(sf::RenderTarget &renderer);
 };

@@ -5,7 +5,7 @@ _position(posX, posY)
 {
 	_string = label;
 	_label.setString(_string);
-	_font.loadFromFile("police.ttf");
+	_font.loadFromFile("res/font/police.ttf");
 	_label.setFont(_font);
 	_label.setCharacterSize(50);
 	_state = DISABLE;
@@ -53,6 +53,12 @@ void Bouton::update(){
 	{
 		_fond.setFillColor(sf::Color(122, 122, 122));
 	}
+}
+
+void Bouton::setCharacterSize(int s){
+	_label.setCharacterSize(s);
+	_fond.setSize(sf::Vector2f((_label.getCharacterSize()*_label.getString().getSize()), _label.getCharacterSize() *2));
+	_label.setPosition(sf::Vector2f(_fond.getPosition().x + _label.getCharacterSize() / 2, _fond.getPosition().y + _label.getCharacterSize() / 2));
 }
 
 void Bouton::render(sf::RenderTarget & renderer){

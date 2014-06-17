@@ -19,8 +19,8 @@ Global
 		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Debug|Win32.Build.0 = Debug|Win32
 		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release Static|Win32.ActiveCfg = Release Static|Win32
 		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release Static|Win32.Build.0 = Release Static|Win32
-		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release|Win32.ActiveCfg = Release|Win32
-		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release|Win32.Build.0 = Release|Win32
+		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release|Win32.ActiveCfg = Release Static|Win32
+		{FD5AA415-17FB-45E6-9043-9CF28993D822}.Release|Win32.Build.0 = Release Static|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

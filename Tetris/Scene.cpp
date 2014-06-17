@@ -10,8 +10,9 @@ _menu(new Menu())
 
 void Scene::lancerJeu()
 {
+	Grille::Genre tmp = _menu->getGenre();
 	delete _menu;
-	_grille = new Grille();
+	_grille = new Grille(tmp);
 	_jeuLance = true;
 }
 
