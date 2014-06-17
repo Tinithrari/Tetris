@@ -8,6 +8,7 @@
 #pragma comment(lib, "openal32.lib") 
 #pragma comment(lib, "sndfile.lib")
 #pragma comment(lib, "sfml-audio-s.lib")
+#pragma comment(lib, "sfml-main.lib")
 #endif // SFML_STATIC
 
 #include <SFML/Graphics.hpp>
